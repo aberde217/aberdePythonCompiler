@@ -1,0 +1,2 @@
+b = 35
+if b < 100 and b == 15: print(b)

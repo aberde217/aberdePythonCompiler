@@ -1,0 +1,48 @@
+#ifndef ABERDEPYTHONCOMPILER_LEXER_H
+#define ABERDEPYTHONCOMPILER_LEXER_H
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <vector>
+using namespace std;
+enum Token {
+    TOK_NL, //new Line, end of command
+    TOK_IDENTIFIER, //identifier
+    TOK_NUM, //number literal
+    TOK_TRUE, //true literal
+    TOK_FALSE, //false literal
+    TOK_PRINT, //print keyword
+    TOK_IF, //if keyword
+    TOK_ELSE, //else keyword
+    TOK_LEFTP, // ( operator
+    TOK_RIGHTP, // ) operator
+    TOK_AND, //and keyword
+    TOK_OR, //or keyword
+    TOK_ASSIGNMENT, //= assignment operator
+    TOK_COLON, //: operator, used in if statement
+    TOK_EQEQ, //== operator
+    TOK_GEQ, //>= operator
+    TOK_LEQ, //<= operator
+    TOK_NEQ, //!= operator
+    TOK_LESST, //< operator
+    TOK_GREATERT, //> operator
+    TOK_PLUS, //+ operator
+    TOK_MINUS, //- operator
+    TOK_MULT, //* operator
+    TOK_DIV // / operator
+};
+
+class Lexer {
+private:
+    string source_code;
+    vector<Token> tokens;
+    vector<Token> generateTokens(string source_code);
+    bool isSingleCharOperator(char ch); //helper function for generateTokens
+    string streq(Token t); //for generating string equivalent of token (FOR TESTING)
+public:
+    Lexer();
+    vector<Token> lex(string file_path);
+    void print(); //prints all tokens in lexer, public for testing purposes
+};
+
+#endif //ABERDEPYTHONCOMPILER_LEXER_H
