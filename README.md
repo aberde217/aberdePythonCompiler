@@ -3,3 +3,4 @@
 
 ## Parser
 #### CFG and CFL
+The alphabet for our grammar is: **Σ = {all possible tokens}**
