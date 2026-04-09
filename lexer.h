@@ -37,12 +37,12 @@ private:
     string source_code;
     vector<Token> tokens;
     vector<Token> generateTokens(string source_code);
-    bool isSingleCharOperator(char ch); //helper function for generateTokens
-    string streq(Token t); //for generating string equivalent of token (FOR TESTING)
+    bool isSingleCharOperator(char ch); // helper function for generateTokens
+    string streq(Token t); // used for lexer testing
 public:
     Lexer();
     vector<Token> lex(string file_path);
-    void print(); //prints all tokens in lexer, public for testing purposes
+    void print(); // used for lexer testing
 };
 
 #endif //ABERDEPYTHONCOMPILER_LEXER_H

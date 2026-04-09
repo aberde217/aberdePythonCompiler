@@ -26,8 +26,8 @@ vector<Token> Lexer::generateTokens(string source_code) {
     tokens.clear();
     for (int i = 0; i < source_code.length(); i++) {
         Token t;
-        //checking for keywords, literals, and identifiers
-        if (isSingleCharOperator(source_code[i])) {
+        // checking for keywords, literals, and identifiers
+        if (isSingleCharOperator(source_code[i])) { // if true, that means temp MAY be a literal, keyword, or identifier
             if (temp == "True") {
                 t = TOK_TRUE;
                 tokens.push_back(t);
@@ -131,10 +131,10 @@ vector<Token> Lexer::generateTokens(string source_code) {
                 t = TOK_LEQ;
                 tokens.push_back(t);
                 i++;
-        }
+            }
             else if (source_code[i] != ' ' && source_code[i] != '\n' && source_code[i] != '\t') temp += source_code[i];
         }
-        //checks end of statement
+        // checks end of statement
         if (source_code[i] == '\n') {
             t = TOK_NL;
             tokens.push_back(t);
@@ -143,11 +143,11 @@ vector<Token> Lexer::generateTokens(string source_code) {
     return tokens;
 }
 
-bool Lexer::isSingleCharOperator(char ch) {
+bool Lexer::isSingleCharOperator(char ch) { // returns true if ch is a single char operator OR space/tab (or new line, AKA end of statement
     return ch == ' ' || ch == '=' || ch == '(' || ch == ')' || ch == ':' || ch == '<' || ch == '>' || ch == '\n' || ch == '\t' || ch == '+' || ch == '-' || ch == '*' || ch == '/';
 }
 
-string Lexer::streq(Token t) {
+string Lexer::streq(Token t) { // converts token to string, used for printing the tokens in vector 'tokens' (FOR TESTING
     if (t == TOK_NL) return "TOK_NL";
     if (t == TOK_IDENTIFIER) return "TOK_IDENTIFIER";
     if (t == TOK_NUM) return "TOK_NUM";
