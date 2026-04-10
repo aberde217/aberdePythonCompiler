@@ -33,7 +33,7 @@ enum Token { //token types
     TOK_DIV // / operator
 };
 
-struct TokenPair { //
+struct TokenPair { //return type for lexer, parser needs token type AND the actual string
     Token type;
     string word;
 };
