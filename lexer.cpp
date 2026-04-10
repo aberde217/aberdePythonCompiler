@@ -110,7 +110,7 @@ bool Lexer::isSingleCharOperator(char ch) { // returns true if ch is a single ch
     return ch == ' ' || ch == '=' || ch == '(' || ch == ')' || ch == ':' || ch == '<' || ch == '>' || ch == '\n' || ch == '\t' || ch == '+' || ch == '-' || ch == '*' || ch == '/';
 }
 
-string Lexer::streq(Token t) { // converts token to string, used for printing the tokens in vector 'tokens' (FOR TESTING
+string Lexer::streq(Token t) { // converts token to string, used for printing the tokens in vector 'tokens' (FOR TESTING)
     if (t == TOK_NL) return "TOK_NL";
     if (t == TOK_IDENTIFIER) return "TOK_IDENTIFIER";
     if (t == TOK_NUM) return "TOK_NUM";
