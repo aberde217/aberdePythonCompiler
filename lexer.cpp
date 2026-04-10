@@ -5,7 +5,7 @@ Lexer::Lexer() {
     source_code = "";
 }
 
-vector<Token> Lexer::lex(string file_path) {
+vector<TokenPair> Lexer::lex(string file_path) {
     source_code = ""; // clears string in case another file was read previously
     ifstream input_file(file_path);
     if (!input_file.is_open()) {
@@ -20,125 +20,88 @@ vector<Token> Lexer::lex(string file_path) {
     return tokens;
 }
 
-vector<Token> Lexer::generateTokens(string source_code) {
-    vector<Token> tokens;
+vector<TokenPair> Lexer::generateTokens(string source_code) {
+    vector<TokenPair> tokens;
     string temp = "";
     tokens.clear();
     for (int i = 0; i < source_code.length(); i++) {
-        Token t;
         // checking for keywords, literals, and identifiers
         if (isSingleCharOperator(source_code[i])) { // if true, that means temp MAY be a literal, keyword, or identifier
-            if (temp == "True") {
-                t = TOK_TRUE;
-                tokens.push_back(t);
-            }
-            else if (temp == "False") {
-                t = TOK_FALSE;
-                tokens.push_back(t);
-            }
-            else if (temp == "print") {
-                t = TOK_PRINT;
-                tokens.push_back(t);
-            }
-            else if (temp == "if") {
-                t = TOK_IF;
-                tokens.push_back(t);
-            }
-            else if (temp == "else") {
-                t = TOK_ELSE;
-                tokens.push_back(t);
-            }
-            else if (temp == "and") {
-                t = TOK_AND;
-                tokens.push_back(t);
-            }
-            else if (temp == "or") {
-                t = TOK_OR;
-                tokens.push_back(t);
-            }
-            else if (isdigit(temp[0])) {
-                t = TOK_NUM;
-                tokens.push_back(t);
-            }
-            else if (isalpha(temp[0]) || temp[0] == '_') {
-                t = TOK_IDENTIFIER;
-                tokens.push_back(t);
-            }
+            if (temp == "True")
+                tokens.push_back({TOK_TRUE, temp});
+            else if (temp == "False")
+                tokens.push_back({TOK_FALSE, temp});
+            else if (temp == "print")
+                tokens.push_back({TOK_PRINT, temp});
+            else if (temp == "if")
+                tokens.push_back({TOK_IF, temp});
+            else if (temp == "else")
+                tokens.push_back({TOK_ELSE, temp});
+            else if (temp == "and")
+                tokens.push_back({TOK_AND, temp});
+            else if (temp == "or")
+                tokens.push_back({TOK_OR, temp});
+            else if (isdigit(temp[0]))
+                tokens.push_back({TOK_NUM, temp});
+            else if (isalpha(temp[0]) || temp[0] == '_')
+                tokens.push_back({TOK_IDENTIFIER, temp});
             temp = "";
         }
         //checks operators
-        if (source_code[i] == ':') {
-            t = TOK_COLON;
-            tokens.push_back(t);
-        }
-        else if (source_code[i] == '(') {
-            t = TOK_LEFTP;
-            tokens.push_back(t);
-        }
-        else if (source_code[i] == ')') {
-            t = TOK_RIGHTP;
-            tokens.push_back(t);
-        }
-        else if (source_code[i] == '+') {
-            t = TOK_PLUS;
-            tokens.push_back(t);
-        }
-        else if (source_code[i] == '-') {
-            t = TOK_MINUS;
-            tokens.push_back(t);
-        }
-        else if (source_code[i] == '*') {
-            t = TOK_MULT;
-            tokens.push_back(t);
-        }
-        else if (source_code[i] == '/') {
-            t = TOK_DIV;
-            tokens.push_back(t);
-        }
+        if (source_code[i] == ':')
+            tokens.push_back({TOK_COLON, string(1, source_code[i])});
+        else if (source_code[i] == '(')
+            tokens.push_back({TOK_LEFTP, string(1, source_code[i])});
+        else if (source_code[i] == ')')
+            tokens.push_back({TOK_RIGHTP, string(1, source_code[i])});
+        else if (source_code[i] == '+')
+            tokens.push_back({TOK_PLUS, string(1, source_code[i])});
+        else if (source_code[i] == '-')
+            tokens.push_back({TOK_MINUS, string(1, source_code[i])});
+        else if (source_code[i] == '*')
+            tokens.push_back({TOK_MULT, string(1, source_code[i])});
+        else if (source_code[i] == '/')
+            tokens.push_back({TOK_DIV, string(1, source_code[i])});
         else if (i != source_code.length() - 1) {
-            if (source_code[i] == '=' && source_code[i+1] != '=') {
-                t = TOK_ASSIGNMENT;
-                tokens.push_back(t);
-            }
-            else if (source_code[i] == ':') {
-                t = TOK_COLON;
-                tokens.push_back(t);
-            }
-            else if (source_code[i] == '<' && source_code[i+1] != '=') {
-                t = TOK_LESST;
-                tokens.push_back(t);
-            }
-            else if (source_code[i] == '>' && source_code[i+1] != '=') {
-                t = TOK_GREATERT;
-                tokens.push_back(t);
-            }
+            if (source_code[i] == '=' && source_code[i+1] != '=')
+                tokens.push_back({TOK_ASSIGNMENT, string(1, source_code[i])});
             else if (source_code[i] == '=' && source_code[i+1] == '=') {
-                t = TOK_EQEQ;
-                tokens.push_back(t);
+                string val = "";
+                val += source_code[i];
+                val += source_code[i+1];
+                i++;
+                tokens.push_back({TOK_EQEQ, val});
+            }
+            else if (source_code[i] == '<' && source_code[i+1] != '=')
+                tokens.push_back({TOK_LESST, string(1, source_code[i])});
+            else if (source_code[i] == '<' && source_code[i+1] == '=') {
+                string val = "";
+                val += source_code[i];
+                val += source_code[i+1];
+                i++;
+                tokens.push_back({TOK_LEQ, val});
+            }
+            else if (source_code[i] == '>' && source_code[i+1] != '=')
+                tokens.push_back({TOK_GREATERT, string(1, source_code[i])});
+            else if (source_code[i] == '>' && source_code[i+1] == '=') {
+                string val = "";
+                val += source_code[i];
+                val += source_code[i+1];
+                tokens.push_back({TOK_GEQ, val});
                 i++;
             }
             else if (source_code[i] == '!' && source_code[i+1] == '=') {
-                t = TOK_NEQ;
-                tokens.push_back(t);
-                i++;
-            }
-            else if (source_code[i] == '>' && source_code[i+1] == '=') {
-                t = TOK_GEQ;
-                tokens.push_back(t);
-                i++;
-            }
-            else if (source_code[i] == '<' && source_code[i+1] == '=') {
-                t = TOK_LEQ;
-                tokens.push_back(t);
+                string val = "";
+                val += source_code[i];
+                val += source_code[i+1];
+                tokens.push_back({TOK_NEQ, val});
                 i++;
             }
             else if (source_code[i] != ' ' && source_code[i] != '\n' && source_code[i] != '\t') temp += source_code[i];
         }
         // checks end of statement
-        if (source_code[i] == '\n') {
-            t = TOK_NL;
-            tokens.push_back(t);
-        }
+        if (source_code[i] == '\n')
+            tokens.push_back({TOK_NL, string(1, source_code[i])});
     }
     return tokens;
 }
@@ -179,7 +142,9 @@ void Lexer::print() {
     cout << source_code << endl;
     cout << "Tokens:" << endl;
     for (int i = 0; i < tokens.size(); i++) {
-        cout << streq(tokens[i]) << " ";
+        if (tokens[i].word == "\n")
+            cout << "(" << streq(tokens[i].type) << ", \"" << "\\n" << "\")";
+        else cout << "(" << streq(tokens[i].type) << ", \"" << tokens[i].word << "\")";
     }
     cout << endl << endl;
 }

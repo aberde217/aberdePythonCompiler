@@ -5,7 +5,8 @@
 #include <fstream>
 #include <vector>
 using namespace std;
-enum Token {
+
+enum Token { //token types
     TOK_NL, //new Line, end of command
     TOK_IDENTIFIER, //identifier
     TOK_NUM, //number literal
@@ -32,16 +33,21 @@ enum Token {
     TOK_DIV // / operator
 };
 
+struct TokenPair { //
+    Token type;
+    string word;
+};
+
 class Lexer {
 private:
     string source_code;
-    vector<Token> tokens;
-    vector<Token> generateTokens(string source_code);
+    vector<TokenPair> tokens;
+    vector<TokenPair> generateTokens(string source_code);
     bool isSingleCharOperator(char ch); // helper function for generateTokens
     string streq(Token t); // used for lexer testing
 public:
     Lexer();
-    vector<Token> lex(string file_path);
+    vector<TokenPair> lex(string file_path);
     void print(); // used for lexer testing
 };
 
