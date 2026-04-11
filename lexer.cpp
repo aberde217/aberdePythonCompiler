@@ -103,6 +103,7 @@ vector<TokenPair> Lexer::generateTokens(string source_code) {
         if (source_code[i] == '\n')
             tokens.push_back({TOK_NL, string(1, source_code[i])});
     }
+    tokens.push_back({TOK_EOF, ""});
     return tokens;
 }
 
@@ -134,7 +135,8 @@ string Lexer::streq(Token t) { // converts token to string, used for printing th
     if (t == TOK_PLUS) return "TOK_PLUS";
     if (t == TOK_MINUS) return "TOK_MINUS";
     if (t == TOK_MULT) return "TOK_MULT";
-    return "TOK_DIV";
+    if (t == TOK_MULT) return "TOK_DIV";
+    return "TOK_EOF";
 }
 
 void Lexer::print() {

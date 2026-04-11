@@ -6,7 +6,7 @@
 #include <vector>
 using namespace std;
 
-enum Token { //token types
+enum Token { // token types
     TOK_NL, //new Line, end of command
     TOK_IDENTIFIER, //identifier
     TOK_NUM, //number literal
@@ -30,10 +30,11 @@ enum Token { //token types
     TOK_PLUS, //+ operator
     TOK_MINUS, //- operator
     TOK_MULT, //* operator
-    TOK_DIV // / operator
+    TOK_DIV, // / operator
+    TOK_EOF //end of file
 };
 
-struct TokenPair { //return type for lexer, parser needs token type AND the actual string
+struct TokenPair { // return type for lexer, parser needs token type AND the actual string
     Token type;
     string word;
 };
