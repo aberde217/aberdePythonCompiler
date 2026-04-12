@@ -4,7 +4,9 @@
 
 struct AST {
     TokenPair t;
-    AST *left, *right;
+    AST *left = nullptr;
+    AST *right = nullptr;
+    AST *third_child = nullptr; //if statements MAY need three children, (condition, statement for true, statement for else). Default should be nullptr, unless otherwise
 };
 
 class Parser {
@@ -12,7 +14,14 @@ private:
     vector<TokenPair> tokens;
     int current_index;
 
-    //Helper functions for recursive descent parsing algorithm
+    //Helper functions for parsing statements
+    AST* parse_statement();
+    AST* parse_if(); // parses if/else statements
+    AST* parse_print(); // parses print function calls
+    AST* parse_assignment(); // parses assignment statements
+
+    //Helper functions for parsing expressions, from greatest to least precedence
+
     AST* parse_or(); // parser hits an 'or' keyword (boolean or), lowest expression operator in precedence
     AST* parse_and(); // parser hits an 'and' keyword (boolean and), next lowest in precedence
     AST* parse_comparisons(); // parser hits comparison operator (lower precedence): ==, >, <, >=, <=, != (== and != have same precedence as other comparisons in Python)
@@ -20,12 +29,13 @@ private:
     AST* parse_factors(); // parser hits * or / operators, next highest
     AST* parse_primary(); // parser hits identifiers or literals, highest precedence
 
-    void preOrderTraversal(AST *root);
+    void preOrderTraversal(AST *root); // used for printing ASTs
 public:
     Parser();
     Parser(vector<TokenPair> tokens);
+    vector<AST*> parse();
     AST* parse_expression();
-    void print(AST *root);
+    void printAST(AST *root);
 };
 
 #endif //ABERDEPYTHONCOMPILER_PARSER_H

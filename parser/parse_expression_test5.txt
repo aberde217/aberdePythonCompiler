@@ -1,0 +1,1 @@
+flagVar and ((x*(y+z)) <= 0)
