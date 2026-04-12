@@ -1,4 +1,4 @@
-#include "lexer.h"
+/*#include "lexer.h"
 #include <vector>
 using namespace std;
 
@@ -11,4 +11,4 @@ int main() {
     tokens = lexer.lex("C:\\Users\\anayf\\CLionProjects\\aberdePythonCompiler\\source3.txt");
     lexer.print();
     return 0;
-}
+}*/
