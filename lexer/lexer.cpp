@@ -48,6 +48,12 @@ vector<TokenPair> Lexer::generateTokens(string source_code) {
             temp = "";
         }
         //checks operators
+        if (source_code[i] == '#') { //checks for comments
+            i++;
+            while (source_code[i] != '\n')
+                i++;
+            continue;
+        }
         if (source_code[i] == ':')
             tokens.push_back({TOK_COLON, string(1, source_code[i])});
         else if (source_code[i] == '(')

@@ -6,6 +6,7 @@ int main() {
     lexer.print();
     Parser parser(tokens);
     vector<AST*> asts = parser.parse();
+    cout << "AST(s) Generated:" << endl;
     for (int i = 0; i < asts.size(); i++) {
         parser.printAST(asts[i]);
     }
