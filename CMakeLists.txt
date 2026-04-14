@@ -10,7 +10,6 @@ add_executable(aberdePythonCompiler
         2_parser/parser.h
         2_parser/parser.cpp
         2_parser/parserTest.cpp
-        2_parser/parser.cpp
         3_analyzer/analyzer.h
         3_analyzer/analyzer.cpp
         3_analyzer/analyzerTest.cpp)
@@ -18,4 +17,5 @@ add_executable(aberdePythonCompiler
 target_include_directories(aberdePythonCompiler PRIVATE
         1_lexer
         2_parser
+        3_analyzer
 )
