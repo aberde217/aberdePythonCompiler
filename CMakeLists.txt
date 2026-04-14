@@ -10,7 +10,10 @@ add_executable(aberdePythonCompiler
         parser/parser.h
         parser/parser.cpp
         parser/parserTest.cpp
-        parser/parser.cpp)
+        parser/parser.cpp
+        analyzer/analyzer.h
+        analyzer/analyzer.cpp
+        analyzer/analyzerTest.cpp)
 
 target_include_directories(aberdePythonCompiler PRIVATE
         lexer

@@ -3,12 +3,10 @@ using namespace std;
 
 Parser::Parser() {
     current_index = 0;
-    line_number = 1;
 }
 
 Parser::Parser(vector<TokenPair> tokens) {
     current_index = 0;
-    line_number = 1;
     this->tokens = tokens;
 }
 
@@ -20,7 +18,6 @@ vector<AST*> Parser::parse() {
         if (root == nullptr) break; // EOF is reached
         statement_asts.push_back(root);
         current = tokens[current_index];
-        line_number++;
     }
     return statement_asts;
 }
@@ -35,7 +32,7 @@ AST *Parser::parse_statement() {
     if (current.type == TOK_PRINT) return parse_print();
     if (current.type == TOK_IDENTIFIER) return parse_assignment();
     if (current.type == TOK_EOF) return nullptr;
-    cout << "SyntaxError: invalid statement (line " << line_number << ")." << endl;
+    cout << "SyntaxError: invalid statement (line " << current.line_num << ")." << endl;
     exit(1);
 }
 
@@ -44,7 +41,7 @@ AST *Parser::parse_if() {
     current_index++;
     AST *node_condition = parse_expression(); // "left child"
     if (tokens[current_index].type != TOK_COLON) {
-        cout << "SyntaxError: ':' expected (line " << line_number << ")." << endl;
+        cout << "SyntaxError: ':' expected (line " << if_keyword.line_num << ")." << endl;
         exit(1);
     }
     current_index++;
@@ -54,7 +51,7 @@ AST *Parser::parse_if() {
     if (tokens[current_index].type == TOK_ELSE) {
         current_index++;
         if (tokens[current_index].type != TOK_COLON) {
-            cout << "SyntaxError: ':' expected (line " << line_number << ")." << endl;
+            cout << "SyntaxError: ':' expected (line " << tokens[current_index].line_num << ")." << endl;
             exit(1);
         }
         current_index++;
@@ -68,14 +65,14 @@ AST *Parser::parse_print() {
     TokenPair print = tokens[current_index];
     current_index++;
     if (tokens[current_index].type != TOK_LEFTP) {
-        cout << "SyntaxError: '(' expected (line " << line_number << ")." << endl;
+        cout << "SyntaxError: '(' expected (line " << tokens[current_index].line_num << ")." << endl;
         exit(1);
     }
     current_index++;
     AST *node_left = parse_expression();
     AST *root = new AST(print, node_left);
     if (tokens[current_index].type != TOK_RIGHTP) {
-        cout << "SyntaxError: ')' expected (line " << line_number << ")." << endl;
+        cout << "SyntaxError: ')' expected (line " << tokens[current_index].line_num << ")." << endl;
         exit(1);
     }
     current_index++;
@@ -87,7 +84,7 @@ AST *Parser::parse_assignment() {
     current_index++;
     TokenPair op = tokens[current_index];
     if (op.type != TOK_ASSIGNMENT) {
-        cout << "SyntaxError: invalid assignment (line " << line_number << ")." << endl;
+        cout << "SyntaxError: invalid assignment (line " << op.line_num << ")." << endl;
         exit(1);
     }
     current_index++;
@@ -106,7 +103,7 @@ AST *Parser::parse_or() {
     if (op.type != TOK_OR)
         return left_child;
     AST *root = nullptr;
-    while (op.type == TOK_OR) { // checks for (potential) chain of or
+    while (op.type == TOK_OR) { // checks for (potential) chain of 'or'
         current_index++;
         AST *right_child = parse_and();
         root = new AST(op, left_child, right_child);
@@ -117,18 +114,30 @@ AST *Parser::parse_or() {
 }
 
 AST *Parser::parse_and() {
-    AST *left_child = parse_comparisons();
+    AST *left_child = parse_not();
     TokenPair op = tokens[current_index];
     if (op.type != TOK_AND)
         return left_child;
     AST *root = nullptr;
-    while (op.type == TOK_AND) { // checks for (potential) chain of and
+    while (op.type == TOK_AND) { // checks for (potential) chain of 'and'
         current_index++;
         AST *right_child = parse_comparisons();
         root = new AST(op, left_child, right_child);
         left_child = root; // left-associative, right subtrees are evaluated first
         op = tokens[current_index];
     }
+    return root;
+}
+
+AST *Parser::parse_not() {
+    //not is a UNARY operator, there's nothing significant BEFORE it.
+    TokenPair op = tokens[current_index];
+    if (op.type != TOK_NOT)
+        return parse_comparisons();
+    AST *root = nullptr;
+    current_index++;
+    AST *left_child = parse_comparisons();
+    root = new AST(op, left_child);
     return root;
 }
 
@@ -187,14 +196,14 @@ AST *Parser::parse_primary() {
         AST* leaf = parse_expression();
         TokenPair new_current = tokens[current_index];
         if (new_current.type != TOK_RIGHTP) {
-            cout << "SyntaxError: invalid syntax (line " << line_number << ")." << endl;
+            cout << "SyntaxError: invalid syntax (line " << new_current.line_num << ")." << endl;
             exit(1);
         }
         current_index++;
         return leaf;
     }
     if (current.type != TOK_IDENTIFIER && current.type != TOK_NUM && current.type != TOK_TRUE && current.type != TOK_FALSE) {
-        cout << "SyntaxError: identifier or literal expected (line " << line_number << ")." << endl;
+        cout << "SyntaxError: identifier or literal expected (line " << current.line_num << ")." << endl;
         exit(1);
     }
     AST* leaf = new AST(current);

@@ -12,7 +12,7 @@ struct AST {
 class Parser {
 private:
     vector<TokenPair> tokens;
-    int current_index, line_number;
+    int current_index;
 
     //Helper functions for parsing statements
     AST* parse_statement();
@@ -24,17 +24,18 @@ private:
     AST* parse_expression();
     AST* parse_or(); // parser hits an 'or' keyword (boolean or), lowest expression operator in precedence
     AST* parse_and(); // parser hits an 'and' keyword (boolean and), next lowest in precedence
+    AST* parse_not(); // parser hits a 'not' keyword (boolean not), next lowest in precedence
     AST* parse_comparisons(); // parser hits comparison operator (lower precedence): ==, >, <, >=, <=, != (== and != have same precedence as other comparisons in Python)
     AST* parse_terms(); // parser hits + or - operators, lowest arithmetic precedence
     AST* parse_factors(); // parser hits * or / operators, next highest
     AST* parse_primary(); // parser hits identifiers or literals, highest precedence
 
-    void preOrderTraversal(AST *root); // used for printing ASTs
+    void preOrderTraversal(AST *root); // helper function for printing ASTs (for testing)
 public:
     Parser();
     Parser(vector<TokenPair> tokens);
     vector<AST*> parse();
-    void printAST(AST *root);
+    void printAST(AST *root); // for parser testing
 };
 
 #endif //ABERDEPYTHONCOMPILER_PARSER_H

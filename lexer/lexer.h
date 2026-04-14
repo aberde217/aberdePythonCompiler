@@ -19,6 +19,7 @@ enum Token { // token types
     TOK_RIGHTP, // ) operator
     TOK_AND, //and keyword
     TOK_OR, //or keyword
+    TOK_NOT, //not keyword
     TOK_ASSIGNMENT, //= assignment operator
     TOK_COLON, //: operator, used in if statement
     TOK_EQEQ, //== operator
@@ -37,12 +38,14 @@ enum Token { // token types
 struct TokenPair { // return type for lexer, parser needs token type AND the actual string
     Token type;
     string word;
+    int line_num;
 };
 
 class Lexer {
 private:
     string source_code;
     vector<TokenPair> tokens;
+    int line;
     vector<TokenPair> generateTokens(string source_code);
     bool isSingleCharOperator(char ch); // helper function for generateTokens
     string streq(Token t); // used for lexer testing
