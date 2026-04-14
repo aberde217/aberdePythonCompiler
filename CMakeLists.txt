@@ -4,18 +4,18 @@ project(aberdePythonCompiler)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(aberdePythonCompiler
-        lexer/lexerTest.cpp
-        lexer/lexer.h
-        lexer/lexer.cpp
-        parser/parser.h
-        parser/parser.cpp
-        parser/parserTest.cpp
-        parser/parser.cpp
-        analyzer/analyzer.h
-        analyzer/analyzer.cpp
-        analyzer/analyzerTest.cpp)
+        1_lexer/lexerTest.cpp
+        1_lexer/lexer.h
+        1_lexer/lexer.cpp
+        2_parser/parser.h
+        2_parser/parser.cpp
+        2_parser/parserTest.cpp
+        2_parser/parser.cpp
+        3_analyzer/analyzer.h
+        3_analyzer/analyzer.cpp
+        3_analyzer/analyzerTest.cpp)
 
 target_include_directories(aberdePythonCompiler PRIVATE
-        lexer
-        parser
+        1_lexer
+        2_parser
 )
