@@ -11,13 +11,13 @@ enum varType {
 class SemanticAnalyzer {
 private:
     vector<AST*> astList;
-    map<string, varType> symbolTable;
     varType tokToVarType(Token t); // converts token (literal type) to varType
     void analyze_assignments(AST* node); // first-pass, stores all assignments in symbol table
     void analyze_tree(AST *node); // second-pass, checks tree for potential unreferenced identifiers
 
     void preOrderTraversal(AST *node); // helper function for printing (testing)
 public:
+    map<string, varType> symbolTable; //simplicity in code generation
     SemanticAnalyzer();
     SemanticAnalyzer(vector<AST*> astList);
     vector<AST*> analyze();

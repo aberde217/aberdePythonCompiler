@@ -1,0 +1,5 @@
+bool = False
+x = 10
+y = 23
+z = 5
+anay = bool or (x+(y-z)<=0)
