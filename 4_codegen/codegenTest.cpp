@@ -2,7 +2,7 @@
 
 int main() {
     Lexer lexer;
-    vector<TokenPair> tokens = lexer.lex("C:\\Users\\anayf\\CLionProjects\\aberdePythonCompiler\\4_codegen\\codegen_test4.txt");
+    vector<TokenPair> tokens = lexer.lex("C:\\Users\\anayf\\CLionProjects\\aberdePythonCompiler\\4_codegen\\codegen_test7.txt");
     lexer.print();
     Parser parser(tokens);
     vector<AST*> asts = parser.parse();

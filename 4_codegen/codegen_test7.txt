@@ -1,0 +1,6 @@
+bool = False
+x = 10
+y = 23
+z = 5
+if bool or (x+(y-z)<=0): bool = True
+else: x = z

@@ -35,6 +35,22 @@ void CodeGenerator::generate_statement_code(AST *node) {
         generate_expression_code(node->right);
         cout << "mov " << node->left->t.word << ", eax" << endl;
     }
+    else if (node->t.type == TOK_IF) {
+        generate_expression_code(node->left);
+        cout << "cmp eax, 1" << endl; // checks if condition is true
+        if (node->third_child != nullptr) { // there's an else
+            cout << "jne else_statement" << endl; // jump to else if condition isn't true
+            generate_statement_code(node->right); // statement if condition is true
+            cout << "jmp end" << endl; // jumps to 'end', skipping over else_statement label
+            cout << "else_statement: " << endl;
+            generate_statement_code(node->third_child); // statement for else
+        }
+        else { // there is no else
+            cout << "jne end" << endl; // jump to 'end' if condition isn't true
+            generate_statement_code(node->right); // statement if condition is true
+        }
+        cout << "end:" << endl;
+    }
 }
 
 void CodeGenerator::generate_expression_code(AST* node) {
@@ -79,7 +95,7 @@ void CodeGenerator::generate_expression_code(AST* node) {
         generate_expression_code(node->right);
         cout << "pop ebx" << endl;
         cout << "xchg eax, ebx" << endl; //swaps register eax and ebx, as we want ebx value to be the dividend
-        cout << "idiv ebx" << endl; //div/idiv doesn't support multi-operand instructions. We'll assume quotient is small enough to fit completely in EAX, where EDX is just 0s.
+        cout << "idiv ebx" << endl; // div/idiv doesn't support multi-operand instructions. We'll assume quotient is small enough to fit completely in EAX, where EDX is just 0s.
     }
 
     // checks for generate comparison operators: <, <=, >, >=, ==
