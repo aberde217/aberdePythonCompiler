@@ -63,21 +63,23 @@ void CodeGenerator::generate_expression_code(AST* node) {
         cout << "push eax" << endl;
         generate_expression_code(node->right);
         cout << "pop ebx" << endl;
-        cout << "sub eax, ebx" << endl;
+        cout << "sub ebx, eax" << endl;
+        cout << "mov eax, ebx" << endl;
     }
     else if (node->t.type == TOK_MULT) {
         generate_expression_code(node->left);
         cout << "push eax" << endl;
         generate_expression_code(node->right);
         cout << "pop ebx" << endl;
-        cout << "mul ebx" << endl;
+        cout << "imul eax, ebx" << endl; // one operand mul places upper 32 bits into EDX. only imul supports two operand instruction
     }
     else if (node->t.type == TOK_DIV) {
         generate_expression_code(node->left);
         cout << "push eax" << endl;
         generate_expression_code(node->right);
         cout << "pop ebx" << endl;
-        cout << "div ebx" << endl;
+        cout << "xchg eax, ebx" << endl; //swaps register eax and ebx, as we want ebx value to be the dividend
+        cout << "idiv ebx" << endl; //div/idiv doesn't support multi-operand instructions. We'll assume quotient is small enough to fit completely in EAX, where EDX is just 0s.
     }
 
     // checks for generate comparison operators: <, <=, >, >=, ==

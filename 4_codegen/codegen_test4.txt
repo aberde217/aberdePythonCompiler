@@ -3,4 +3,4 @@ y = 23
 z = 5
 a = 100
 bool = False
-result = 100/(x+(y-z))<=0
+result = bool or 100/(x+(y-z))<=0
