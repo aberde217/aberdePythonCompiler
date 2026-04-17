@@ -10,6 +10,8 @@ CodeGenerator::CodeGenerator(vector<AST*> ast, map<string, varType> symbolTable)
 }
 
 void CodeGenerator::generate_x86() {
+    cout << "include Irvine32.inc" << endl; // for potential print statements
+    cout << "ExitProcess proto, dwExitCode:DWORD" << endl;
     generate_data_segment();
     cout << endl;
     generate_code_segment();
@@ -27,6 +29,8 @@ void CodeGenerator::generate_code_segment() {
     for (int i = 0; i < finalASTs.size(); i++) {
         generate_statement_code(finalASTs[i]);
     }
+    cout << "invoke ExitProcess, 0" << endl;
+    cout << "main endp" << endl;
     cout << "end main" << endl;
 }
 
@@ -50,6 +54,10 @@ void CodeGenerator::generate_statement_code(AST *node) {
             generate_statement_code(node->right); // statement if condition is true
         }
         cout << "end:" << endl;
+    }
+    else if (node->t.type == TOK_PRINT) {
+        generate_expression_code(node->left);
+        cout << "call WriteInt" << endl; // expression output is in EAX, WriteInt prints value in EAX
     }
 }
 
