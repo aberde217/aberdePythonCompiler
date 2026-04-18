@@ -1,8 +1,8 @@
-/*#include "codegen.h"
+#include "interpreter.h"
 
 int main() {
     Lexer lexer;
-    vector<TokenPair> tokens = lexer.lex("C:\\Users\\anayf\\CLionProjects\\aberdePythonCompiler\\4_codegen\\codegen_test10.txt");
+    vector<TokenPair> tokens = lexer.lex("C:\\Users\\anayf\\CLionProjects\\aberdePythonCompiler\\5_interpreter\\interpreter_test4.txt");
     lexer.print();
     Parser parser(tokens);
     vector<AST*> asts = parser.parse();
@@ -16,7 +16,8 @@ int main() {
     cout << "Final AST(s):" << endl;
     analyzer.print();
     cout << endl;
-    CodeGenerator cg(final_asts, analyzer.symbolTable);
-    cout << "Assembly Code:\n--------------------------" << endl;
-    cg.generate_x86();
-}*/
+    Interpreter interpreter(final_asts);
+    cout << "Program Output\n-----------------" << endl;
+    interpreter.execute();
+    cout << endl;
+}

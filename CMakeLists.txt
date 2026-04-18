@@ -15,7 +15,10 @@ add_executable(aberdePythonCompiler
         3_analyzer/analyzerTest.cpp
         4_codegen/codegen.h
         4_codegen/codegen.cpp
-        4_codegen/codegenTest.cpp)
+        4_codegen/codegenTest.cpp
+        5_interpreter/interpreter.h
+        5_interpreter/interpreter.cpp
+        5_interpreter/interpreterTest.cpp)
 
 target_include_directories(aberdePythonCompiler PRIVATE
         1_lexer
