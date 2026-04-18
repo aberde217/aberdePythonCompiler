@@ -1,4 +1,4 @@
-#include "interpreter.h"
+/*#include "interpreter.h"
 
 int main() {
     Lexer lexer;
@@ -20,4 +20,5 @@ int main() {
     cout << "Program Output\n-----------------" << endl;
     interpreter.execute();
     cout << endl;
-}
+    return 0;
+}*/

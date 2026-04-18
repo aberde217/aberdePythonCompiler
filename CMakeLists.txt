@@ -18,7 +18,8 @@ add_executable(aberdePythonCompiler
         4_codegen/codegenTest.cpp
         5_interpreter/interpreter.h
         5_interpreter/interpreter.cpp
-        5_interpreter/interpreterTest.cpp)
+        5_interpreter/interpreterTest.cpp
+        main.cpp)
 
 target_include_directories(aberdePythonCompiler PRIVATE
         1_lexer

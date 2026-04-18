@@ -19,4 +19,5 @@ int main() {
     CodeGenerator cg(final_asts, analyzer.symbolTable);
     cout << "Assembly Code:\n--------------------------" << endl;
     cg.generate_x86();
+    return 0;
 }*/
