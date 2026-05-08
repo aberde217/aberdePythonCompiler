@@ -21,14 +21,14 @@ C++Py is a python compiler I built with C++. It takes a source python program (.
       *  SEE SLIDES FOR FULL CFG FOR GRAMMAR 
     *  For code, see the parser.h/parser.cpp files inside 2_parser folder.
   *  Semantic Analyzer
-    *  Major function(s): analyze_tree(AST *node), analyze_assignments(AST *node), analyze()
-    *  Purpose: check for any unreferenced identifiers being used. If all is good, same AST vector from parser should be returned
-    *  For code, see analyzer.h/analyzer.cpp in 3_analyzer folder.
+    * Major function(s): analyze_tree(AST *node), analyze_assignments(AST *node), analyze()
+    * Purpose: check for any unreferenced identifiers being used. If all is good, same AST vector from parser should be returned
+    * For code, see analyzer.h/analyzer.cpp in 3_analyzer folder.
   *  Code Generator
-    *  Major function(s): generate_expression_code(AST *node), generate_statement_code(AST *node)
-    *  Purpose: generate x86 code for the source python program, through recursively traversing through each AST in the vector.
-    *  For code, see codegen.h/codegen.cpp inside 4_codegen folder.
+    * Major function(s): generate_expression_code(AST *node), generate_statement_code(AST *node)
+    * Purpose: generate x86 code for the source python program, through recursively traversing through each AST in the vector.
+    * For code, see codegen.h/codegen.cpp inside 4_codegen folder.
   *  Interpreter
-    *  Major function(s): execute_expression(AST *node), execute_statement(AST *node)
-    *  Purpose: walk through each AST (recursively) in vector, and simulate a run-through of the source program
-    *  For code, see interpreter.h/interpreter.cpp in 5_interpreter folder.
+    * Major function(s): execute_expression(AST *node), execute_statement(AST *node)
+    * Purpose: walk through each AST (recursively) in vector, and simulate a run-through of the source program
+    * For code, see interpreter.h/interpreter.cpp in 5_interpreter folder.
