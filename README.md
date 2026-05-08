@@ -32,3 +32,5 @@ C++Py is a python compiler I built with C++. It takes a source python program (.
   - Major function(s): execute_expression(AST *node), execute_statement(AST *node)
   - Purpose: walk through each AST (recursively) in vector, and simulate a run-through of the source program.
   - For code, see interpreter.h/interpreter.cpp in 5_interpreter folder.
+
+FURTHER INFORMATION ABOUT COMPILER STRUCTURE CAN BE FOUND ON GOOGLE SLIDES SUBMITTED IN ASSIGNMENT.
