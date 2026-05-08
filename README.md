@@ -21,7 +21,6 @@ C++Py is a python compiler I built with C++. It takes a source python program (.
       *  SEE SLIDES FOR FULL CFG FOR GRAMMAR 
     *  For code, see the parser.h/parser.cpp files inside 2_parser folder.
   *  Semantic Analyzer
-    *  TEST
     *  Major function(s): analyze_tree(AST *node), analyze_assignments(AST *node), analyze()
     *  Purpose: check for any unreferenced identifiers being used. If all is good, same AST vector from parser should be returned
     *  For code, see analyzer.h/analyzer.cpp in 3_analyzer folder.
