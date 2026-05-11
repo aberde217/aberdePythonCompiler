@@ -3,7 +3,7 @@
 
 int main() {
     Lexer lexer;
-    vector<TokenPair> tokens = lexer.lex("C:\\Users\\anayf\\CLionProjects\\aberdePythonCompiler\\source_code3.py");
+    vector<TokenPair> tokens = lexer.lex("C:\\Users\\anayf\\CLionProjects\\aberdePythonCompiler\\source_code1.py");
 
     Parser parser(tokens);
     vector<AST*> astList = parser.parse();
