@@ -1,2 +1,36 @@
 # C++Py: A basic Python Compiler built with C++
 
+**Introduction:**
+C++Py is a python compiler I built with C++. It takes a source python program (.py file) and prints the high level output and the generated x86 code on the console. This compiler supports if/else statements, variable assignment, boolean/integer literals, arithmetic operators, comparison operators, boolean operators, and printing. 
+
+**How to run the program:**
+  1. Open this project in an IDE that supports C++. 
+  2. Open main.cpp.
+  3. "vector<TokenPair> tokens = lexer.lex("C:\\Users\\anayf\\CLionProjects\\aberdePythonCompiler\\source_code4.py");" this line opens the file, and begins lexical analysis.
+     i. To compile a different python program, change source_code4.py to any other .py file in the repository (source_code3.py, ...).
+  4. Run main.cpp, to see program output and x86 code generated.
+
+**Description of Structure:**
+- Lexer
+  - Major function(s): generateTokens(string source_code)
+  - Purpose: convert a .py file to a string (done through lex function), and then generate a vector of tokens for each statement in the program.
+  - For code, see the lexer.h/lexer.cpp files inside 1_lexer folder.
+- Parser
+  - Major function(s): parse_primary(), parse_factors(), parse_terms(), parse_comparisons(), parse_not(), parse_and(), parse_or(), parse_expression(), parse_assignment(), parse_print(), parse_if(), parse_statement()
+  - Purpose: make sure the stream of tokens is syntactically correct. If all is good, produce a vector of abstract syntax trees (for each statement).
+    - SEE SLIDES FOR FULL CFG FOR GRAMMAR
+  - For code, see the parser.h/parser.cpp files inside 2_parser folder.
+- Semantic Analyzer
+  - Major function(s): analyze_tree(AST *node), analyze_assignments(AST *node), analyze()
+  - Purpose: check for any unreferenced identifiers being used. If all is good, same AST vector from parser should be returned.
+  - For code, see analyzer.h/analyzer.cpp in 3_analyzer folder.
+- Code Generator
+  - Major function(s): generate_expression_code(AST *node), generate_statement_code(AST *node)
+  - Purpose: generate x86 code for the source python program, through recursively traversing through each AST in the vector.
+  - For code, see codegen.h/codegen.cpp inside 4_codegen folder.
+- Interpreter
+  - Major function(s): execute_expression(AST *node), execute_statement(AST *node)
+  - Purpose: walk through each AST (recursively) in vector, and simulate a run-through of the source program.
+  - For code, see interpreter.h/interpreter.cpp in 5_interpreter folder.
+
+FURTHER INFORMATION ABOUT COMPILER STRUCTURE CAN BE FOUND ON GOOGLE SLIDES SUBMITTED IN ASSIGNMENT.
